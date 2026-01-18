@@ -43,11 +43,11 @@ export class MultiSuggesterModal<T> extends Modal {
             "modal-button-container"
         );
         new ButtonComponent(buttonContainer)
-            .setButtonText("Save")
+            .setButtonText(this.t("Save"))
             .setCta()
             .onClick(() => this.save());
         new ButtonComponent(buttonContainer)
-            .setButtonText("Cancel")
+            .setButtonText(this.t("Cancel"))
             .onClick(() => this.close());
     }
 
