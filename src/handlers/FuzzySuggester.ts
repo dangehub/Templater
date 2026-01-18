@@ -17,7 +17,7 @@ export class FuzzySuggester extends FuzzySuggestModal<TFile> {
     constructor(plugin: TemplaterPlugin) {
         super(plugin.app);
         this.plugin = plugin;
-        this.setPlaceholder("Type name of a template...");
+        this.setPlaceholder(this.plugin.t("Type name of a template..."));
     }
 
     getItems(): TFile[] {
