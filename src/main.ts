@@ -12,7 +12,11 @@ import EventHandler from "handlers/EventHandler";
 import { CommandHandler } from "handlers/CommandHandler";
 import { Editor } from "editor/Editor";
 
+import { initI18n } from "./lang/i18n";
+
 export default class TemplaterPlugin extends Plugin {
+    i18n: any;
+    t: (key: string, params?: any) => string;
     public settings: Settings;
     public templater: Templater;
     public event_handler: EventHandler;
@@ -21,6 +25,8 @@ export default class TemplaterPlugin extends Plugin {
     public editor_handler: Editor;
 
     async onload(): Promise<void> {
+        this.i18n = initI18n(this);
+        this.t = this.i18n.t.bind(this.i18n);
         await this.load_settings();
 
         this.templater = new Templater(this);
