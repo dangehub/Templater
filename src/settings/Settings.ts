@@ -83,11 +83,11 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
     add_template_folder_setting(): void {
         new Setting(this.containerEl)
-            .setName("Template folder location")
-            .setDesc("Files in this folder will be available as templates.")
+            .setName(this.plugin.t("Template folder location"))
+            .setDesc(this.plugin.t("Files in this folder will be available as templates."))
             .addSearch((cb) => {
                 new FolderSuggest(this.app, cb.inputEl);
-                cb.setPlaceholder("Example: folder1/folder2")
+                cb.setPlaceholder(this.plugin.t("Example: folder1/folder2"))
                     .setValue(this.plugin.settings.templates_folder)
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
@@ -105,36 +105,38 @@ export class TemplaterSettingTab extends PluginSettingTab {
     add_internal_functions_setting(): void {
         const desc = document.createDocumentFragment();
         desc.append(
-            "Templater provides multiples predefined variables / functions that you can use.",
+            this.plugin.t(
+                "Templater provides multiples predefined variables / functions that you can use."
+            ),
             desc.createEl("br"),
-            "Check the ",
+            this.plugin.t("Check the "),
             desc.createEl("a", {
                 href: "https://silentvoid13.github.io/Templater/",
                 text: "documentation",
             }),
-            " to get a list of all the available internal variables / functions."
+            this.plugin.t(" to get a list of all the available internal variables / functions.")
         );
 
         new Setting(this.containerEl)
-            .setName("Internal variables and functions")
+            .setName(this.plugin.t("Internal variables and functions"))
             .setDesc(desc);
     }
 
     add_syntax_highlighting_settings(): void {
         const desktopDesc = document.createDocumentFragment();
         desktopDesc.append(
-            "Adds syntax highlighting for Templater commands in edit mode."
+            this.plugin.t("Adds syntax highlighting for Templater commands in edit mode.")
         );
 
         const mobileDesc = document.createDocumentFragment();
         mobileDesc.append(
-            "Adds syntax highlighting for Templater commands in edit mode on " +
-                "mobile. Use with caution: this may break live preview on mobile " +
-                "platforms."
+            this.plugin.t(
+                "Adds syntax highlighting for Templater commands in edit mode on mobile. Use with caution: this may break live preview on mobile platforms."
+            )
         );
 
         new Setting(this.containerEl)
-            .setName("Syntax highlighting on desktop")
+            .setName(this.plugin.t("Syntax highlighting on desktop"))
             .setDesc(desktopDesc)
             .addToggle((toggle) => {
                 toggle
@@ -148,7 +150,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
             });
 
         new Setting(this.containerEl)
-            .setName("Syntax highlighting on mobile")
+            .setName(this.plugin.t("Syntax highlighting on mobile"))
             .setDesc(mobileDesc)
             .addToggle((toggle) => {
                 toggle
@@ -165,17 +167,17 @@ export class TemplaterSettingTab extends PluginSettingTab {
     add_auto_jump_to_cursor(): void {
         const desc = document.createDocumentFragment();
         desc.append(
-            "Automatically triggers ",
-            desc.createEl("code", { text: "tp.file.cursor" }),
-            " after inserting a template.",
+            this.plugin.t("Automatically triggers "),
+            desc.createEl("code", { text: this.plugin.t("tp.file.cursor") }),
+            this.plugin.t(" after inserting a template."),
             desc.createEl("br"),
-            "You can also set a hotkey to manually trigger ",
-            desc.createEl("code", { text: "tp.file.cursor" }),
+            this.plugin.t("You can also set a hotkey to manually trigger "),
+            desc.createEl("code", { text: this.plugin.t("tp.file.cursor") }),
             "."
         );
 
         new Setting(this.containerEl)
-            .setName("Automatic jump to cursor")
+            .setName(this.plugin.t("Automatic jump to cursor"))
             .setDesc(desc)
             .addToggle((toggle) => {
                 toggle
@@ -191,21 +193,29 @@ export class TemplaterSettingTab extends PluginSettingTab {
     add_trigger_on_new_file_creation_setting(): void {
         const desc = document.createDocumentFragment();
         desc.append(
-            "Templater will listen for the new file creation event, and, if it matches a rule you've set, replace every command it finds in the new file's content. ",
-            "This makes Templater compatible with other plugins like the Daily note core plugin, Calendar plugin, Review plugin, Note refactor plugin, etc. ",
+            this.plugin.t(
+                "Templater will listen for the new file creation event, and, if it matches a rule you've set, replace every command it finds in the new file's content. "
+            ),
+            this.plugin.t(
+                "This makes Templater compatible with other plugins like the Daily note core plugin, Calendar plugin, Review plugin, Note refactor plugin, etc. "
+            ),
             desc.createEl("br"),
             desc.createEl("br"),
-            "Make sure to set up rules under either folder templates or file regex template below.",
+            this.plugin.t(
+                "Make sure to set up rules under either folder templates or file regex template below."
+            ),
             desc.createEl("br"),
             desc.createEl("br"),
             desc.createEl("b", {
-                text: "Warning: ",
+                text: this.plugin.t("Warning: "),
             }),
-            "This can be dangerous if you create new files with unknown / unsafe content on creation. Make sure that every new file's content is safe on creation."
+            this.plugin.t(
+                "This can be dangerous if you create new files with unknown / unsafe content on creation. Make sure that every new file's content is safe on creation."
+            )
         );
 
         new Setting(this.containerEl)
-            .setName("Trigger Templater on new file creation")
+            .setName(this.plugin.t("Trigger Templater on new file creation"))
             .setDesc(desc)
             .addToggle((toggle) => {
                 toggle
@@ -222,11 +232,11 @@ export class TemplaterSettingTab extends PluginSettingTab {
     }
 
     add_templates_hotkeys_setting(): void {
-        new Setting(this.containerEl).setName("Template hotkeys").setHeading();
+        new Setting(this.containerEl).setName(this.plugin.t("Template hotkeys")).setHeading();
 
         const desc = document.createDocumentFragment();
         desc.append(
-            "Template hotkeys allows you to bind a template to a hotkey."
+            this.plugin.t("Template hotkeys allows you to bind a template to a hotkey.")
         );
 
         new Setting(this.containerEl).setDesc(desc);
@@ -240,7 +250,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             this.plugin,
                             FileSuggestMode.TemplateFiles
                         );
-                        cb.setPlaceholder("Example: folder1/template_file")
+                        cb.setPlaceholder(this.plugin.t("Example: folder1/template_file"))
                             .setValue(template)
                             .onChange((new_template) => {
                                 if (
@@ -271,7 +281,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addExtraButton((cb) => {
                         cb.setIcon("any-key")
-                            .setTooltip("Configure Hotkey")
+                            .setTooltip(this.plugin.t("Configure Hotkey"))
                             .onClick(() => {
                                 // TODO: Replace with future "official" way to do this
                                 // @ts-ignore
@@ -284,7 +294,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addExtraButton((cb) => {
                         cb.setIcon("up-chevron-glyph")
-                            .setTooltip("Move up")
+                            .setTooltip(this.plugin.t("Move up"))
                             .onClick(() => {
                                 arraymove(
                                     this.plugin.settings
@@ -298,7 +308,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addExtraButton((cb) => {
                         cb.setIcon("down-chevron-glyph")
-                            .setTooltip("Move down")
+                            .setTooltip(this.plugin.t("Move down"))
                             .onClick(() => {
                                 arraymove(
                                     this.plugin.settings
@@ -312,7 +322,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addExtraButton((cb) => {
                         cb.setIcon("cross")
-                            .setTooltip("Delete")
+                            .setTooltip(this.plugin.t("Delete"))
                             .onClick(() => {
                                 this.plugin.command_handler.remove_template_hotkey(
                                     this.plugin.settings
@@ -332,7 +342,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         );
 
         new Setting(this.containerEl).addButton((cb) => {
-            cb.setButtonText("Add new hotkey for template")
+            cb.setButtonText(this.plugin.t("Add new hotkey for template"))
                 .setCta()
                 .onClick(() => {
                     this.plugin.settings.enabled_templates_hotkeys.push("");
@@ -344,17 +354,19 @@ export class TemplaterSettingTab extends PluginSettingTab {
     }
 
     add_folder_templates_setting(): void {
-        new Setting(this.containerEl).setName("Folder templates").setHeading();
+        new Setting(this.containerEl).setName(this.plugin.t("Folder templates")).setHeading();
 
         const descHeading = document.createDocumentFragment();
         descHeading.append(
-            "Folder templates are triggered when a new ",
-            descHeading.createEl("strong", { text: "empty " }),
-            "file is created in a given folder.",
+            this.plugin.t("Folder templates are triggered when a new "),
+            descHeading.createEl("strong", { text: this.plugin.t("empty ") }),
+            this.plugin.t("file is created in a given folder."),
             descHeading.createEl("br"),
-            "Templater will fill the empty file with the specified template.",
+            this.plugin.t("Templater will fill the empty file with the specified template."),
             descHeading.createEl("br"),
-            "The deepest match is used. A global default template would be defined on the root ",
+            this.plugin.t(
+                "The deepest match is used. A global default template would be defined on the root "
+            ),
             descHeading.createEl("code", { text: "/" }),
             "."
         );
@@ -363,11 +375,13 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
         const descUseNewFileTemplate = document.createDocumentFragment();
         descUseNewFileTemplate.append(
-            "When enabled, Templater will make use of the folder templates defined below. This option is mutually exclusive with file regex templates below, so enabling one will disable the other."
+            this.plugin.t(
+                "When enabled, Templater will make use of the folder templates defined below. This option is mutually exclusive with file regex templates below, so enabling one will disable the other."
+            )
         );
 
         new Setting(this.containerEl)
-            .setName("Enable folder templates")
+            .setName(this.plugin.t("Enable folder templates"))
             .setDesc(descUseNewFileTemplate)
             .addToggle((toggle) => {
                 toggle
@@ -393,7 +407,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 const s = new Setting(this.containerEl)
                     .addSearch((cb) => {
                         new FolderSuggest(this.app, cb.inputEl);
-                        cb.setPlaceholder("Folder")
+                        cb.setPlaceholder(this.plugin.t("Folder"))
                             .setValue(folder_template.folder)
                             .onChange((new_folder) => {
                                 if (
@@ -424,7 +438,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             this.plugin,
                             FileSuggestMode.TemplateFiles
                         );
-                        cb.setPlaceholder("Template")
+                        cb.setPlaceholder(this.plugin.t("Template"))
                             .setValue(folder_template.template)
                             .onChange((new_template) => {
                                 this.plugin.settings.folder_templates[
@@ -437,7 +451,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addExtraButton((cb) => {
                         cb.setIcon("up-chevron-glyph")
-                            .setTooltip("Move up")
+                            .setTooltip(this.plugin.t("Move up"))
                             .onClick(() => {
                                 arraymove(
                                     this.plugin.settings.folder_templates,
@@ -450,7 +464,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addExtraButton((cb) => {
                         cb.setIcon("down-chevron-glyph")
-                            .setTooltip("Move down")
+                            .setTooltip(this.plugin.t("Move down"))
                             .onClick(() => {
                                 arraymove(
                                     this.plugin.settings.folder_templates,
@@ -463,7 +477,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addExtraButton((cb) => {
                         cb.setIcon("cross")
-                            .setTooltip("Delete")
+                            .setTooltip(this.plugin.t("Delete"))
                             .onClick(() => {
                                 this.plugin.settings.folder_templates.splice(
                                     index,
@@ -479,8 +493,8 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
         new Setting(this.containerEl).addButton((button: ButtonComponent) => {
             button
-                .setButtonText("Add new folder template")
-                .setTooltip("Add additional folder template")
+                .setButtonText(this.plugin.t("Add new folder template"))
+                .setTooltip(this.plugin.t("Add additional folder template"))
                 .setCta()
                 .onClick(() => {
                     this.plugin.settings.folder_templates.push({
@@ -495,31 +509,37 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
     add_file_templates_setting(): void {
         new Setting(this.containerEl)
-            .setName("File regex templates")
+            .setName(this.plugin.t("File regex templates"))
             .setHeading();
 
         const descHeading = document.createDocumentFragment();
         descHeading.append(
-            "File regex templates are triggered when a new ",
+            this.plugin.t("File regex templates are triggered when a new "),
             descHeading.createEl("strong", { text: "empty" }),
-            " file is created that matches one of them. Templater will fill the empty file with the specified template.",
+            this.plugin.t(
+                " file is created that matches one of them. Templater will fill the empty file with the specified template."
+            ),
             descHeading.createEl("br"),
-            "The first match from the top is used, so the order of the rules is important.",
+            this.plugin.t(
+                "The first match from the top is used, so the order of the rules is important."
+            ),
             descHeading.createEl("br"),
-            "Use ",
+            this.plugin.t("Use "),
             descHeading.createEl("code", { text: ".*" }),
-            " as a final catch-all, if you need it."
+            this.plugin.t(" as a final catch-all, if you need it.")
         );
 
         new Setting(this.containerEl).setDesc(descHeading);
 
         const descUseNewFileTemplate = document.createDocumentFragment();
         descUseNewFileTemplate.append(
-            "When enabled, Templater will make use of the file regex templates defined below. This option is mutually exclusive with folder templates above, so enabling one will disable the other."
+            this.plugin.t(
+                "When enabled, Templater will make use of the file regex templates defined below. This option is mutually exclusive with folder templates above, so enabling one will disable the other."
+            )
         );
 
         new Setting(this.containerEl)
-            .setName("Enable file regex templates")
+            .setName(this.plugin.t("Enable file regex templates"))
             .setDesc(descUseNewFileTemplate)
             .addToggle((toggle) => {
                 toggle
@@ -544,7 +564,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         this.plugin.settings.file_templates.forEach((file_template, index) => {
             const s = new Setting(this.containerEl)
                 .addText((cb) => {
-                    cb.setPlaceholder("File regex")
+                    cb.setPlaceholder(this.plugin.t("File regex"))
                         .setValue(file_template.regex)
                         .onChange((new_regex) => {
                             this.plugin.settings.file_templates[index].regex =
@@ -560,7 +580,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                         this.plugin,
                         FileSuggestMode.TemplateFiles
                     );
-                    cb.setPlaceholder("Template")
+                    cb.setPlaceholder(this.plugin.t("Template"))
                         .setValue(file_template.template)
                         .onChange((new_template) => {
                             this.plugin.settings.file_templates[
@@ -573,7 +593,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 })
                 .addExtraButton((cb) => {
                     cb.setIcon("up-chevron-glyph")
-                        .setTooltip("Move up")
+                        .setTooltip(this.plugin.t("Move up"))
                         .onClick(() => {
                             arraymove(
                                 this.plugin.settings.file_templates,
@@ -586,7 +606,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 })
                 .addExtraButton((cb) => {
                     cb.setIcon("down-chevron-glyph")
-                        .setTooltip("Move down")
+                        .setTooltip(this.plugin.t("Move down"))
                         .onClick(() => {
                             arraymove(
                                 this.plugin.settings.file_templates,
@@ -599,7 +619,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 })
                 .addExtraButton((cb) => {
                     cb.setIcon("cross")
-                        .setTooltip("Delete")
+                        .setTooltip(this.plugin.t("Delete"))
                         .onClick(() => {
                             this.plugin.settings.file_templates.splice(
                                 index,
@@ -614,8 +634,8 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
         new Setting(this.containerEl).addButton((button: ButtonComponent) => {
             button
-                .setButtonText("Add new file regex")
-                .setTooltip("Add additional file regex")
+                .setButtonText(this.plugin.t("Add new file regex"))
+                .setTooltip(this.plugin.t("Add additional file regex"))
                 .setCta()
                 .onClick(() => {
                     this.plugin.settings.file_templates.push({
@@ -629,15 +649,19 @@ export class TemplaterSettingTab extends PluginSettingTab {
     }
 
     add_startup_templates_setting(): void {
-        new Setting(this.containerEl).setName("Startup templates").setHeading();
+        new Setting(this.containerEl).setName(this.plugin.t("Startup templates")).setHeading();
 
         const desc = document.createDocumentFragment();
         desc.append(
-            "Startup templates are templates that will get executed once when Templater starts.",
+            this.plugin.t(
+                "Startup templates are templates that will get executed once when Templater starts."
+            ),
             desc.createEl("br"),
-            "These templates won't output anything.",
+            this.plugin.t("These templates won't output anything."),
             desc.createEl("br"),
-            "This can be useful to set up templates adding hooks to Obsidian events for example."
+            this.plugin.t(
+                "This can be useful to set up templates adding hooks to Obsidian events for example."
+            )
         );
 
         new Setting(this.containerEl).setDesc(desc);
@@ -650,7 +674,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                         this.plugin,
                         FileSuggestMode.TemplateFiles
                     );
-                    cb.setPlaceholder("Example: folder1/template_file")
+                    cb.setPlaceholder(this.plugin.t("Example: folder1/template_file"))
                         .setValue(template)
                         .onChange((new_template) => {
                             if (
@@ -675,7 +699,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 })
                 .addExtraButton((cb) => {
                     cb.setIcon("cross")
-                        .setTooltip("Delete")
+                        .setTooltip(this.plugin.t("Delete"))
                         .onClick(() => {
                             this.plugin.settings.startup_templates.splice(
                                 index,
@@ -690,7 +714,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         });
 
         new Setting(this.containerEl).addButton((cb) => {
-            cb.setButtonText("Add new startup template")
+            cb.setButtonText(this.plugin.t("Add new startup template"))
                 .setCta()
                 .onClick(() => {
                     this.plugin.settings.startup_templates.push("");
@@ -703,29 +727,31 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
     add_user_script_functions_setting(): void {
         new Setting(this.containerEl)
-            .setName("User script functions")
+            .setName(this.plugin.t("User script functions"))
             .setHeading();
 
         let desc = document.createDocumentFragment();
         desc.append(
-            "All JavaScript files in this folder will be loaded as CommonJS modules, to import custom user functions.",
+            this.plugin.t(
+                "All JavaScript files in this folder will be loaded as CommonJS modules, to import custom user functions."
+            ),
             desc.createEl("br"),
-            "The folder needs to be accessible from the vault.",
+            this.plugin.t("The folder needs to be accessible from the vault."),
             desc.createEl("br"),
-            "Check the ",
+            this.plugin.t("Check the "),
             desc.createEl("a", {
                 href: "https://silentvoid13.github.io/Templater/",
                 text: "documentation",
             }),
-            " for more information."
+            this.plugin.t(" for more information.")
         );
 
         new Setting(this.containerEl)
-            .setName("Script files folder location")
+            .setName(this.plugin.t("Script files folder location"))
             .setDesc(desc)
             .addSearch((cb) => {
                 new FolderSuggest(this.app, cb.inputEl);
-                cb.setPlaceholder("Example: folder1/folder2")
+                cb.setPlaceholder(this.plugin.t("Example: folder1/folder2"))
                     .setValue(this.plugin.settings.user_scripts_folder)
                     .onChange((new_folder) => {
                         this.plugin.settings.user_scripts_folder = new_folder;
@@ -736,15 +762,17 @@ export class TemplaterSettingTab extends PluginSettingTab {
             });
 
         new Setting(this.containerEl)
-        .setName('User script intellisense')
-        .setDesc('Determine how you\'d like to have user script intellisense render. Note values will not render if not in the script.')
+        .setName(this.plugin.t("User script intellisense"))
+        .setDesc(this.plugin.t(
+            "Determine how you'd like to have user script intellisense render. Note values will not render if not in the script."
+        ))
         .addDropdown(cb => {
             cb
-                .addOption("0", "Turn off intellisense")
-                .addOption("1", "Render method description, parameters list, and return")
-                .addOption("2", "Render method description and parameters list")
-                .addOption("3", "Render method description and return")
-                .addOption("4", "Render method description")
+                .addOption("0", this.plugin.t("Turn off intellisense"))
+                .addOption("1", this.plugin.t("Render method description, parameters list, and return"))
+                .addOption("2", this.plugin.t("Render method description and parameters list"))
+                .addOption("3", this.plugin.t("Render method description and return"))
+                .addOption("4", this.plugin.t("Render method description"))
                 .setValue(this.plugin.settings.intellisense_render.toString())
                 .onChange((value) => {
                     this.plugin.settings.intellisense_render = parseInt(value);
@@ -789,7 +817,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
             .addExtraButton((extra) => {
                 extra
                     .setIcon("sync")
-                    .setTooltip("Refresh")
+                    .setTooltip(this.plugin.t("Refresh"))
                     .onClick(() => {
                         // Force refresh
                         this.display();
@@ -800,19 +828,21 @@ export class TemplaterSettingTab extends PluginSettingTab {
     add_user_system_command_functions_setting(): void {
         let desc = document.createDocumentFragment();
         desc.append(
-            "Allows you to create user functions linked to system commands.",
+            this.plugin.t("Allows you to create user functions linked to system commands."),
             desc.createEl("br"),
             desc.createEl("b", {
-                text: "Warning: ",
+                text: this.plugin.t("Warning: "),
             }),
-            "It can be dangerous to execute arbitrary system commands from untrusted sources. Only run system commands that you understand, from trusted sources."
+            this.plugin.t(
+                "It can be dangerous to execute arbitrary system commands from untrusted sources. Only run system commands that you understand, from trusted sources."
+            )
         );
         new Setting(this.containerEl)
-            .setName("User system command functions")
+            .setName(this.plugin.t("User system command functions"))
             .setHeading();
 
         new Setting(this.containerEl)
-            .setName("Enable user system command functions")
+            .setName(this.plugin.t("Enable user system command functions"))
             .setDesc(desc)
             .addToggle((toggle) => {
                 toggle
@@ -828,10 +858,10 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
         if (this.plugin.settings.enable_system_commands) {
             new Setting(this.containerEl)
-                .setName("Timeout")
-                .setDesc("Maximum timeout in seconds for a system command.")
+                .setName(this.plugin.t("Timeout"))
+                .setDesc(this.plugin.t("Maximum timeout in seconds for a system command."))
                 .addText((text) => {
-                    text.setPlaceholder("Timeout")
+                    text.setPlaceholder(this.plugin.t("Timeout"))
                         .setValue(
                             this.plugin.settings.command_timeout.toString()
                         )
@@ -852,17 +882,21 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
             desc = document.createDocumentFragment();
             desc.append(
-                "Full path to the shell binary to execute the command with.",
+                this.plugin.t("Full path to the shell binary to execute the command with."),
                 desc.createEl("br"),
-                "This setting is optional and will default to the system's default shell if not specified.",
+                this.plugin.t(
+                    "This setting is optional and will default to the system's default shell if not specified."
+                ),
                 desc.createEl("br"),
-                "You can use forward slashes ('/') as path separators on all platforms if in doubt."
+                this.plugin.t(
+                    "You can use forward slashes ('/') as path separators on all platforms if in doubt."
+                )
             );
             new Setting(this.containerEl)
-                .setName("Shell binary location")
+                .setName(this.plugin.t("Shell binary location"))
                 .setDesc(desc)
                 .addText((text) => {
-                    text.setPlaceholder("Example: /bin/bash, ...")
+                    text.setPlaceholder(this.plugin.t("Example: /bin/bash, ..."))
                         .setValue(this.plugin.settings.shell_path)
                         .onChange((shell_path) => {
                             this.plugin.settings.shell_path = shell_path;
@@ -884,7 +918,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     .addExtraButton((extra) => {
                         extra
                             .setIcon("cross")
-                            .setTooltip("Delete")
+                            .setTooltip(this.plugin.t("Delete"))
                             .onClick(() => {
                                 const index =
                                     this.plugin.settings.templates_pairs.indexOf(
@@ -903,7 +937,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addText((text) => {
                         const t = text
-                            .setPlaceholder("Function name")
+                            .setPlaceholder(this.plugin.t("Function name"))
                             .setValue(template_pair[0])
                             .onChange((new_value) => {
                                 const index =
@@ -923,7 +957,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     })
                     .addTextArea((text) => {
                         const t = text
-                            .setPlaceholder("System command")
+                            .setPlaceholder(this.plugin.t("System command"))
                             .setValue(template_pair[1])
                             .onChange((new_cmd) => {
                                 const index =
@@ -958,7 +992,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
             const setting = new Setting(this.containerEl).addButton(
                 (button) => {
                     button
-                        .setButtonText("Add new user function")
+                        .setButtonText(this.plugin.t("Add new user function"))
                         .setCta()
                         .onClick(() => {
                             this.plugin.settings.templates_pairs.push(["", ""]);
@@ -976,9 +1010,11 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
     add_donating_setting(): void {
         const s = new Setting(this.containerEl)
-            .setName("Donate")
+            .setName(this.plugin.t("Donate"))
             .setDesc(
-                "If you like this Plugin, consider donating to support continued development."
+                this.plugin.t(
+                    "If you like this Plugin, consider donating to support continued development."
+                )
             );
 
         const a1 = document.createElement("a");
